@@ -31,11 +31,9 @@ import { cn } from "@/lib/utils";
 
 import type { SignInSchema } from "@/features/auth/schemas";
 
-interface Props {
-  props?: React.ComponentProps<"div">;
-}
+type Props = React.ComponentProps<"div">;
 
-export const SignInView = ({ props }: Props) => {
+export const SignInView = ({ className, ...props }: Props) => {
   const [isPending, startTransition] = useTransition();
 
   const router = useRouter();
@@ -75,7 +73,7 @@ export const SignInView = ({ props }: Props) => {
   );
 
   return (
-    <div className={cn("flex flex-col gap-6", props?.className)} {...props}>
+    <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
           <form
@@ -186,7 +184,7 @@ export const SignInView = ({ props }: Props) => {
           className="p-0 text-xs text-balance"
           asChild
         >
-          <Link href="#">Term of Service</Link>
+          <Link href="#">Terms of Service</Link>
         </Button>{" "}
         and{" "}
         <Button
