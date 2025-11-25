@@ -1,12 +1,7 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import { UserIcon } from "lucide-react";
-import { Controller, useForm } from "react-hook-form";
-import { toast } from "sonner";
-
-import { useCallback, useTransition } from "react";
-import { useRouter } from "next/navigation";
+import { Controller } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
 import { Field, FieldError, FieldGroup } from "@/components/ui/field";
@@ -16,50 +11,11 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group";
 import { Spinner } from "@/components/ui/spinner";
-import { signInSchema } from "@/features/auth/schemas";
+import { useSignIn } from "@/features/auth/hooks/use-sign-in";
 import { InputPassword } from "@/features/auth/ui/components/input-password";
-import { authClient } from "@/lib/auth/client";
-
-import type { SignInSchema } from "@/features/auth/schemas";
 
 export const AuthSignInForm = () => {
-  const [isPending, startTransition] = useTransition();
-
-  const router = useRouter();
-
-  const form = useForm<SignInSchema>({
-    resolver: zodResolver(signInSchema),
-    defaultValues: {
-      username: "",
-      password: "",
-    },
-    mode: "all",
-  });
-
-  const onSubmitform = useCallback(
-    async (values: SignInSchema) => {
-      startTransition(async () => {
-        await authClient.signIn.username({
-          username: values.username,
-          password: values.password,
-          fetchOptions: {
-            onSuccess: () => {
-              form.reset();
-              toast.success("Signed In successfully");
-              router.push("/");
-            },
-
-            onError: (ctx) => {
-              toast.error("Failed to sign in", {
-                description: ctx.error.message,
-              });
-            },
-          },
-        });
-      });
-    },
-    [form, router]
-  );
+  const { form, isPending, onSubmitform } = useSignIn();
 
   return (
     <>
