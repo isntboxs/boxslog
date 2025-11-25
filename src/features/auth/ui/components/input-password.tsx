@@ -1,4 +1,4 @@
-import { EyeIcon, EyeOffIcon, LockKeyholeIcon } from "lucide-react";
+import { EyeClosedIcon, EyeIcon, LockKeyholeIcon } from "lucide-react";
 
 import { useState } from "react";
 
@@ -27,7 +27,7 @@ export const InputPassword = (props: Props) => {
 
       <InputGroupAddon align="inline-end">
         <InputGroupButton onClick={togglePassword} size="icon-xs">
-          {showPassword ? <EyeIcon /> : <EyeOffIcon />}
+          {showPassword ? <EyeClosedIcon /> : <EyeIcon />}
         </InputGroupButton>
       </InputGroupAddon>
     </InputGroup>

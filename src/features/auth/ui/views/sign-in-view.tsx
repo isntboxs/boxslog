@@ -172,7 +172,7 @@ export const SignInView = ({ props }: Props) => {
               width={400}
               height={400}
               alt="Sign In Banner"
-              className="absolut inset-0 h-full w-full object-cover"
+              className="absolute inset-0 h-full w-full object-cover"
             />
           </figure>
         </CardContent>
