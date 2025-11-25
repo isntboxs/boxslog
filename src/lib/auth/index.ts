@@ -37,11 +37,14 @@ export const auth = betterAuth({
                 role: UserRole.ADMIN,
               },
             };
+          } else {
+            return {
+              data: {
+                ...user,
+                role: UserRole.USER,
+              },
+            };
           }
-
-          return {
-            data: user,
-          };
         },
       },
     },
@@ -68,8 +71,8 @@ export const auth = betterAuth({
   user: {
     additionalFields: {
       role: {
-        type: [UserRole.ADMIN, UserRole.USER],
-        defaultValue: UserRole.USER,
+        type: "string",
+        defaultValue: "USER",
       },
     },
   },
