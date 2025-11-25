@@ -5,13 +5,25 @@ export const env = createEnv({
   server: {
     DATABASE_URL: z.url(),
     NODE_ENV: z.enum(["development", "test", "production"]),
+    ADMIN_EMAILS: z
+      .string()
+      .default("")
+      .transform((val) => (val === "" ? [] : val.split(","))),
+    BETTER_AUTH_SECRET: z.string(),
+    BETTER_AUTH_URL: z.url(),
   },
 
-  client: {},
+  client: {
+    NEXT_PUBLIC_APP_URL: z.url(),
+  },
 
   runtimeEnv: {
     DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
+    ADMIN_EMAILS: process.env.ADMIN_EMAILS,
+    BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
+    BETTER_AUTH_URL: process.env.BETTER_AUTH_URL,
+    NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
   },
 
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,
