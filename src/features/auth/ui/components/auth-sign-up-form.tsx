@@ -1,12 +1,7 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import { MailIcon, UserIcon } from "lucide-react";
-import { Controller, useForm } from "react-hook-form";
-import { toast } from "sonner";
-
-import { useCallback, useTransition } from "react";
-import { useRouter } from "next/navigation";
+import { Controller } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
 import { Field, FieldError, FieldGroup } from "@/components/ui/field";
@@ -16,57 +11,11 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group";
 import { Spinner } from "@/components/ui/spinner";
-import { signUpSchema } from "@/features/auth/schemas";
+import { useSignUp } from "@/features/auth/hooks/use-sign-up";
 import { InputPassword } from "@/features/auth/ui/components/input-password";
-import { authClient } from "@/lib/auth/client";
-
-import type { SignUpSchema } from "@/features/auth/schemas";
 
 export const AuthSignUpForm = () => {
-  const [isPending, startTransition] = useTransition();
-
-  const router = useRouter();
-
-  const form = useForm<SignUpSchema>({
-    resolver: zodResolver(signUpSchema),
-    defaultValues: {
-      name: "",
-      username: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    },
-    mode: "all",
-  });
-
-  const onSubmitform = useCallback(
-    async (values: SignUpSchema) => {
-      startTransition(async () => {
-        await authClient.signUp.email({
-          name: values.name,
-          username: values.username,
-          email: values.email,
-          password: values.password,
-          fetchOptions: {
-            onSuccess: () => {
-              form.reset();
-              toast.success("Signed Up successfully", {
-                description: "You can now sign in",
-              });
-              router.push("/sign-in");
-            },
-
-            onError: (ctx) => {
-              toast.error("Failed to sign up", {
-                description: ctx.error.message,
-              });
-            },
-          },
-        });
-      });
-    },
-    [form, router]
-  );
+  const { form, onSubmitform, isPending } = useSignUp();
 
   return (
     <>
