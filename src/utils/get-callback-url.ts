@@ -12,8 +12,21 @@ export const getCallbackUrl = (
   const callbackUrl = queryParams.get("callbackUrl");
 
   if (callbackUrl) {
-    if (allowedCallbackSet.has(callbackUrl)) {
-      return callbackUrl;
+    // Validate the callbackUrl is a safe relative path:
+    // - Must start with a single "/"
+    // - Must not start with "//"
+    // - Must not contain a scheme like "://"
+    if (
+      callbackUrl.startsWith("/") &&
+      !callbackUrl.startsWith("//") &&
+      !callbackUrl.includes("://")
+    ) {
+      // Check if it equals an allowed entry or has an allowed entry as a prefix
+      for (const allowed of allowedCallbackSet) {
+        if (callbackUrl === allowed || callbackUrl.startsWith(allowed + "/")) {
+          return callbackUrl;
+        }
+      }
     }
 
     return "/";
