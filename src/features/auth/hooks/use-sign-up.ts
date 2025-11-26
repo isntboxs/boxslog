@@ -3,10 +3,11 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 import { useCallback, useTransition } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { signUpSchema } from "@/features/auth/schemas";
 import { authClient } from "@/lib/auth/client";
+import { getCallbackUrl } from "@/utils/get-callback-url";
 
 import type { SignUpSchema } from "@/features/auth/schemas";
 
@@ -14,6 +15,7 @@ export const useSignUp = () => {
   const [isPending, startTransition] = useTransition();
 
   const router = useRouter();
+  const params = useSearchParams();
 
   const form = useForm<SignUpSchema>({
     resolver: zodResolver(signUpSchema),
@@ -41,7 +43,9 @@ export const useSignUp = () => {
               toast.success("Signed Up successfully", {
                 description: "You can now sign in",
               });
-              router.push("/sign-in");
+              router.push(
+                `/sign-in?callbackUrl=${encodeURIComponent(getCallbackUrl(params))}`
+              );
             },
 
             onError: (ctx) => {
@@ -53,7 +57,7 @@ export const useSignUp = () => {
         });
       });
     },
-    [form, router]
+    [form, router, params]
   );
 
   return {
