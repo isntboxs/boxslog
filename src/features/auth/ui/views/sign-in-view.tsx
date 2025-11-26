@@ -1,10 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
+import { Suspense } from "react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { SIGN_IN_FORM } from "@/features/auth/constants";
 import { AuthSignInForm } from "@/features/auth/ui/components/auth-sign-in-form";
+import {
+  HasAccountLinkSkeleton,
+  SignInFormSekeleton,
+} from "@/features/auth/ui/components/auth-skeleton";
 import { HasAccountLink } from "@/features/auth/ui/components/has-account-link";
 import { cn } from "@/lib/utils";
 
@@ -25,10 +30,14 @@ export const SignInView = ({ className, ...props }: Props) => {
                 </p>
               </div>
 
-              <AuthSignInForm />
+              <Suspense fallback={<SignInFormSekeleton />}>
+                <AuthSignInForm />
+              </Suspense>
             </div>
 
-            <HasAccountLink type="sign-in" />
+            <Suspense fallback={<HasAccountLinkSkeleton />}>
+              <HasAccountLink type="sign-in" />
+            </Suspense>
           </div>
 
           <figure className="bg-muted relative hidden md:block">
