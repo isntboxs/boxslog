@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { SIGN_IN_FORM } from "@/features/auth/constants";
 import { AuthSignInForm } from "@/features/auth/ui/components/auth-sign-in-form";
+import { HasAccountLink } from "@/features/auth/ui/components/has-account-link";
 import { cn } from "@/lib/utils";
 
 type Props = React.ComponentProps<"div">;
@@ -27,12 +28,7 @@ export const SignInView = ({ className, ...props }: Props) => {
               <AuthSignInForm />
             </div>
 
-            <div className="text-muted-foreground mt-4 text-center text-sm">
-              {SIGN_IN_FORM.footerText}{" "}
-              <Button variant="link" size="sm" className="p-0" asChild>
-                <Link href="/sign-up">Sign Up</Link>
-              </Button>
-            </div>
+            <HasAccountLink type="sign-in" />
           </div>
 
           <figure className="bg-muted relative hidden md:block">
