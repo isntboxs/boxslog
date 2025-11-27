@@ -5,6 +5,7 @@ import { createRouterClient } from "@orpc/server";
 import { cache } from "react";
 import { headers } from "next/headers";
 
+import { createQueryClient } from "@/lib/query-client";
 import { createORPCContext } from "@/orpc";
 import { appRouter } from "@/orpc/routers";
 
@@ -36,3 +37,5 @@ globalThis.$client = createRouterClient(appRouter, {
    */
   context: createContext,
 });
+
+export const getQueryClient = cache(createQueryClient);

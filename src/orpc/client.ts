@@ -22,9 +22,17 @@ function getBaseUrl() {
 export const link = new RPCLink({
   url: getBaseUrl() + "/api/orpc",
   headers: async () => {
-    const { headers } = await import("next/headers");
+    // On the client we can't use `next/headers`, just send the custom header.
+    if (typeof window !== "undefined") {
+      const heads = new Headers();
+      heads.set("x-orpc-source", "nextjs-react");
+      return heads;
+    }
 
-    const heads = new Headers(await headers());
+    // On the server, forward the incoming request headers.
+    const { headers } = await import("next/headers");
+    const requestHeaders = await headers();
+    const heads = new Headers(requestHeaders);
     heads.set("x-orpc-source", "nextjs-react");
     return heads;
   },
