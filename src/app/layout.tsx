@@ -1,7 +1,7 @@
+import "@/orpc/server";
 import "@/styles/globals.css";
 
-import { ThemeProvider } from "@/components/providers/theme-provider";
-import { Toaster } from "@/components/ui/sonner";
+import { AppProvider } from "@/components/providers/app-provider";
 import { geistMono, geistSans } from "@/lib/fonts";
 
 import type { Metadata } from "next";
@@ -24,15 +24,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="font-sans antialiased">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-          <Toaster position="top-center" richColors />
-        </ThemeProvider>
+        <AppProvider>{children}</AppProvider>
       </body>
     </html>
   );
