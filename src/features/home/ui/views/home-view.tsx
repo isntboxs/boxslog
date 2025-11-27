@@ -11,7 +11,7 @@ export const HomeViewLoading = () => {
   return (
     <LoadingState
       title="Load Home page"
-      description="This is take a few seconds"
+      description="This may take a few seconds"
     />
   );
 };

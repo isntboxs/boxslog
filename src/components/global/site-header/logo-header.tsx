@@ -12,6 +12,7 @@ export const LogoHeader = () => {
   return (
     <MotionLink href="/" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.9 }}>
       <BoxsIcon className="size-7" />
+      <span className="sr-only">Go to homepage</span>
     </MotionLink>
   );
 };

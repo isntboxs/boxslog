@@ -74,6 +74,7 @@ export const NavigationHeaderMobile = ({ className, ...props }: Props) => {
         <SheetTrigger asChild>
           <Button variant="ghost" size="icon-sm">
             <MenuIcon />
+            <span className="sr-only">Open menu</span>
           </Button>
         </SheetTrigger>
         <SheetContent side="right">
